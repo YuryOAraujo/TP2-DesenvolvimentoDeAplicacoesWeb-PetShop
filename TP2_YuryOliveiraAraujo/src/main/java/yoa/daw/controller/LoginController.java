@@ -46,6 +46,6 @@ public class LoginController {
 		user.setConfirmationToken(UUID.randomUUID().toString());
 		DAO<User> dao = new DAO<>(User.class);
 		dao.add(user);
-		return "loginForm";
+		return "login";
 	}
 }

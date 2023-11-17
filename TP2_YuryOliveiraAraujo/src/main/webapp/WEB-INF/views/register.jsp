@@ -12,7 +12,7 @@
 	<form action="registerForm" method="post">
 		<p>CPF: <input type="text" name="cpf"></p>
 		<p>Nome: <input type="text" name="name"></p>
-		<p>Data de Nascimento: <input type="text" name="birthDate"></p>
+		<p>Data de Nascimento: <input type="date" name="birthDate"></p>
 		<p>Email: <input type="text" name="email"></p>
 		<p>Senha: <input type="password" name="password"></p>
 		<p>Telefone: <input type="text" name="phone"></p>

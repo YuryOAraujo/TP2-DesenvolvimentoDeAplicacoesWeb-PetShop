@@ -1,6 +1,8 @@
 package yoa.daw.model;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +29,8 @@ public class User {
 	@Column(nullable = false)
 	private String name;
 	@Column(name = "birth_date", nullable = false)
-	private Calendar birthDate;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate birthDate;
 	@Column(nullable = false)
 	private String email;
 	@Column(nullable = false)
@@ -70,10 +73,10 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Calendar getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(Calendar birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 	public String getEmail() {
