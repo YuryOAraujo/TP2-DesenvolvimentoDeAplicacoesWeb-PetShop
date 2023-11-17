@@ -27,5 +27,23 @@ public class UserDAO {
 	    List<User> users = query.getResultList();
 	    return !users.isEmpty();
 	}
+	
+	public User findByToken(String token) {
+		Query query = manager.createQuery(
+                "SELECT u FROM User u WHERE u.confirmationToken = :token", User.class);
+        query.setParameter("token", token);
+        @SuppressWarnings("unchecked")
+		List<User> resultList = query.getResultList();
+        return resultList.isEmpty() ? null : resultList.get(0);
+	}
+	
+	public User findByEmail(String email) {
+		Query query = manager.createQuery(
+                "SELECT u FROM User u WHERE u.email = :email", User.class);
+        query.setParameter("email", email);
+        @SuppressWarnings("unchecked")
+		List<User> resultList = query.getResultList();
+        return resultList.isEmpty() ? null : resultList.get(0);
+	}
 
 }

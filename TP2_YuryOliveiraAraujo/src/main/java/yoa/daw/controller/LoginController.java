@@ -9,7 +9,9 @@ import jakarta.servlet.http.HttpSession;
 import yoa.daw.dao.DAO;
 import yoa.daw.dao.UserDAO;
 import yoa.daw.model.User;
+import yoa.daw.utilities.EmailService;
 import yoa.daw.utilities.PermissionEnum;
+import yoa.daw.utilities.PermissionUtils;
 import yoa.daw.utilities.UserConfirmedEnum;
 
 @Controller
@@ -21,9 +23,11 @@ public class LoginController {
 	
 	@RequestMapping("login")
 	public String login(User user, HttpSession session) {
-		if(new UserDAO().validate(user)) {
+		UserDAO userDAO = new UserDAO();
+		if(userDAO.validate(user)) {
+			user = userDAO.findByEmail(user.getEmail());
 			session.setAttribute("logged", user);
-			return "redirect:listTasks";
+			return PermissionUtils.obtainDashboard(user.getPermission());
 		}
 		return "redirect:loginForm";
 	}
@@ -46,6 +50,24 @@ public class LoginController {
 		user.setConfirmationToken(UUID.randomUUID().toString());
 		DAO<User> dao = new DAO<>(User.class);
 		dao.add(user);
+		EmailService.sendConfirmationEmail(user.getName(), user.getEmail(), user.getConfirmationToken());
 		return "login";
+	}
+	
+	@RequestMapping("verifyEmail")
+	public String verifyEmail(User user) {
+		 User userDatabase = new UserDAO().findByToken(user.getConfirmationToken());
+
+	    if (userDatabase != null)
+	        if (userDatabase.getConfirmed() == UserConfirmedEnum.NOT_CONFIRMED) {
+	            userDatabase.setConfirmed(UserConfirmedEnum.CONFIRMED);
+	            DAO<User> dao = new DAO<>(User.class);
+	            dao.update(userDatabase);
+	            return "email/verified";
+	        } 
+	        else
+	            return "email/alreadyVerified";
+	    else
+	       return "email/notFound";
 	}
 }
