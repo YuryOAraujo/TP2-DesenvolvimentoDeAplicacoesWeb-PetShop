@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import yoa.daw.utilities.PermissionEnum;
+import yoa.daw.utilities.UserConfirmedEnum;
 
 @Entity
 @Table(name = "users")
@@ -34,6 +35,10 @@ public class User {
 	private String phone;
 	@Enumerated(EnumType.STRING)
 	private PermissionEnum permission;
+	@Enumerated(EnumType.STRING)
+	private UserConfirmedEnum confirmed;
+	@Column(name = "confirmation_token")
+	private String confirmationToken;
 	
 	public Long getId() {
 		return id;
@@ -88,5 +93,18 @@ public class User {
 	}
 	public void setPermission(PermissionEnum permission) {
 		this.permission = permission;
+	}
+	public UserConfirmedEnum getConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(UserConfirmedEnum confirmed) {
+		this.confirmed = confirmed;
+	}
+	public String getConfirmationToken() {
+		return confirmationToken;
+	}
+	public void setConfirmationToken(String confirmationToken) {
+		this.confirmationToken = confirmationToken;
 	}	
+	
 }

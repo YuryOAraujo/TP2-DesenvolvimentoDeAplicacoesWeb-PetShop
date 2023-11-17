@@ -13,8 +13,9 @@
 	
 	<form action="login" method="post">
 		<p>Email: <input type="text" name="email"></p>
-		<p>Password: <input type="password" name="password"></p>
+		<p>Senha: <input type="password" name="password"></p>
 		<input type="submit" name="Login">
 	</form>
+	<a href="register">Não possui uma conta?</a>
 </body>
 </html>
