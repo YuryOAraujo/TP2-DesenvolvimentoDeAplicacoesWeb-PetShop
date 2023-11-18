@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,5 +16,16 @@
 	<p><a href="listPerformedServicesPage">Listar serviços executados</a></p>
 	
 	<a href="logout">Sair</a>	
+	
+	<h2>Meus Cães</h2>
+<ul>
+    <c:forEach var="dog" items="${dogs}">
+        <li>
+            <img src="data:image/jpeg;base64,${dog.base64Image}" alt="${dog.name} Image"/>
+            ${dog.name} - ${dog.breed} - ${dog.size}            
+        </li>
+    </c:forEach>
+</ul>
+	
 </body>
 </html>
