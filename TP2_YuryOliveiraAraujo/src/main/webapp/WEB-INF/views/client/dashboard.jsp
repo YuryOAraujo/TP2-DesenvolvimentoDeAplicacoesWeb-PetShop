@@ -1,3 +1,4 @@
+<%@page import="yoa.daw.model.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -18,14 +19,12 @@
 	<a href="logout">Sair</a>	
 	
 	<h2>Meus Cães</h2>
-<ul>
-    <c:forEach var="dog" items="${dogs}">
-        <li>
-            <img src="data:image/jpeg;base64,${dog.base64Image}" alt="${dog.name} Image"/>
-            ${dog.name} - ${dog.breed} - ${dog.size}            
-        </li>
-    </c:forEach>
-</ul>
-	
+	<ul>
+	    <c:forEach var="dog" items="<%= new yoa.daw.dao.DogDAO().findDogsByUser((User)session.getAttribute(\"logged\")) %>">
+	        <li>
+	            ${dog.name} - ${dog.breed} - ${dog.size.size}            
+	        </li>
+	    </c:forEach>
+	</ul>
 </body>
 </html>

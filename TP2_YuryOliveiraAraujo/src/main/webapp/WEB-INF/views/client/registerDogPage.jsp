@@ -22,9 +22,6 @@
             <option value="LARGE">Grande</option>
         </select><br>
 
-        <label for="image">Imagem:</label>
-        <input type="file" id="image" name="image" accept="image/*"><br>
-
         <input type="submit" value="Cadastrar">
 	</form>
 </body>

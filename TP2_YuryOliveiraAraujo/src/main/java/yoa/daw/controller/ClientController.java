@@ -11,11 +11,19 @@ import yoa.daw.dao.DAO;
 import yoa.daw.dao.DogDAO;
 import yoa.daw.model.Dog;
 import yoa.daw.model.User;
+import yoa.daw.utilities.PermissionUtils;
 
 @Controller
 public class ClientController {
+	private boolean isAdmin(HttpSession session) {
+		User user = (User) session.getAttribute("logged");
+		return PermissionUtils.verifyPermission(user.getPermission());
+	}
+	
 	@RequestMapping("registerDogPage")
-	public String registerDogPage() {
+	public String registerDogPage(HttpSession session) {
+		if(isAdmin(session))
+			return "staff/dashboard";
 		return "client/registerDogPage";
 	}
 	
@@ -28,22 +36,18 @@ public class ClientController {
 			dao.add(dog);			
 		}
 		return "client/dashboard";
-		
 	}
 	
 	@RequestMapping("client/dashboard")
 	public String clientDashboard(Model model, HttpSession session) {
+		if(isAdmin(session))
+			return "staff/dashboard";
+		
 		User user = (User) session.getAttribute("logged");
 
 	    if (user != null) {
 	        DogDAO dogDAO = new DogDAO();
 	        List<Dog> dogs = dogDAO.findDogsByUser(user);
-	        dogDAO.encodeImagesAsBase64(dogs);
-	        
-	        for(var dog:dogs) {
-	        	System.out.println("IMG -> " + dog.getBase64Image());
-	        }
-
 	        model.addAttribute("dogs", dogs);
 	        return "client/dashboard";
 	    } else {
@@ -52,22 +56,30 @@ public class ClientController {
 	}
 	
 	@RequestMapping("updateProfilePage")
-	public String updateProfilePage() {
+	public String updateProfilePage(HttpSession session) {
+		if(isAdmin(session))
+			return "staff/dashboard";
 		return "client/updateProfilePage";
 	}
 	
 	@RequestMapping("scheduleServicePage")
-	public String scheduleServicePage() {
+	public String scheduleServicePage(HttpSession session) {
+		if(isAdmin(session))
+			return "staff/dashboard";
 		return "client/scheduleServicePage";
 	}
 	
 	@RequestMapping("listScheduleServicesPage")
-	public String listScheduleServicesPage() {
+	public String listScheduleServicesPage(HttpSession session) {
+		if(isAdmin(session))
+			return "staff/dashboard";
 		return "client/listScheduleServicesPage";
 	}
 	
 	@RequestMapping("listPerformedServicesPage")
-	public String listPerformedServicesPage() {
+	public String listPerformedServicesPage(HttpSession session) {
+		if(isAdmin(session))
+			return "staff/dashboard";
 		return "client/listPerformedServicesPage";
 	}
 }

@@ -12,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import yoa.daw.utilities.PermissionEnum;
 import yoa.daw.utilities.UserConfirmedEnum;
 
@@ -22,8 +21,6 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank
-	private String login;
 	@Column(nullable = false)
 	private String cpf;
 	@Column(nullable = false)
@@ -48,12 +45,6 @@ public class User {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getLogin() {
-		return login;
-	}
-	public void setLogin(String login) {
-		this.login = login;
 	}
 	public String getPassword() {
 		return password;

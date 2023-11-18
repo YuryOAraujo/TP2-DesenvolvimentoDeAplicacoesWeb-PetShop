@@ -8,10 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import yoa.daw.utilities.DogSizeEnum;
 
 @Entity
@@ -29,10 +27,7 @@ public class Dog {
 	private String breed;
 	@Enumerated(EnumType.STRING)
 	private DogSizeEnum size;
-	@Lob
-	private byte[] image;
-	@Transient
-	private String base64Image;
+	
 	public Long getId() {
 		return id;
 	}
@@ -62,18 +57,6 @@ public class Dog {
 	}
 	public void setSize(DogSizeEnum size) {
 		this.size = size;
-	}
-	public byte[] getImage() {
-		return image;
-	}
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
-	public String getBase64Image() {
-		return base64Image;
-	}
-	public void setBase64Image(String base64Image) {
-		this.base64Image = base64Image;
 	}
 	
 }
