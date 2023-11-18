@@ -8,5 +8,14 @@
 </head>
 <body>
 	<p>Cadastrar serviço</p>
+	<form action="registerService" method="post">
+		<label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="breed">Valor:</label>
+        <input type="text" id="price" name="price" required><br>
+        
+        <input type="submit" value="Cadastrar">
+	</form>
 </body>
 </html>

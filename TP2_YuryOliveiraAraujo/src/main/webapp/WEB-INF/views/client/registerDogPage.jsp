@@ -8,7 +8,7 @@
 </head>
 <body>
 	<p>Cadastrar cão</p>
-	<form action="registerDog">
+	<form action="registerDog" method="post">
 	 	<label for="name">Nome do cão:</label>
         <input type="text" id="name" name="name" required><br>
 

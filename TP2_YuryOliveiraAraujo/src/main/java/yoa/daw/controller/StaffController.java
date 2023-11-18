@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
+import yoa.daw.dao.DAO;
+import yoa.daw.model.Service;
 import yoa.daw.model.User;
 import yoa.daw.utilities.PermissionUtils;
 
@@ -19,6 +21,12 @@ public class StaffController {
 		if(isClient(session))
 			return "client/dashboard";
 		return "staff/registerServicePage";
+	}
+	
+	@RequestMapping("registerService")
+	public String registerService(Service service) {
+		new DAO<Service>(Service.class).add(service);
+		return "staff/dashboard";
 	}
 	
 	@RequestMapping("updateServicePage")
