@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Task Manager - Login</title>
+<title>Petshop Cão Q-Late - Login</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link type="text/css" href="resources/css/tarefas.css" rel="stylesheet">
 </head>
