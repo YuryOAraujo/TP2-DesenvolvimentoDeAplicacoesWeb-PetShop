@@ -1,6 +1,7 @@
 package yoa.daw.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,10 +31,23 @@ public class StaffController {
 	}
 	
 	@RequestMapping("updateServicePage")
-	public String updateServicePage(HttpSession session) {
+	public String updateServicePage(HttpSession session, Model model) {
 		if(isClient(session))
 			return "client/dashboard";
+		model.addAttribute("services", new DAO<Service>(Service.class).list());
 		return "staff/updateServicePage";
+	}
+	
+	@RequestMapping("displayService")
+	public String displayService(Service service, Model model) {
+		model.addAttribute("service", new DAO<Service>(Service.class).findById(service.getId()));
+		return "staff/display";
+	}
+	
+	@RequestMapping("updateService")
+	public String updateService(Service service) {
+		new DAO<Service>(Service.class).update(service);
+		return "redirect:updateServicePage";
 	}
 	
 	@RequestMapping("listServicesPage")

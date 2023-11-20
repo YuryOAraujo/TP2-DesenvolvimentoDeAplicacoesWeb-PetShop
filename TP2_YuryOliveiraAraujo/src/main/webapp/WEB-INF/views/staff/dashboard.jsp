@@ -1,7 +1,6 @@
 <%@page import="yoa.daw.model.Service"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,13 +17,5 @@
 	
 	<a href="logout">Sair</a>	
 	
-	<h2>Serviços</h2>
-	<ul>
-	    <c:forEach var="service" items="<%= new yoa.daw.dao.DAO<Service>(Service.class).list() %>">
-	        <li>
-	            ${service.name} - ${service.price}
-	        </li>
-	    </c:forEach>
-	</ul>
 </body>
 </html>

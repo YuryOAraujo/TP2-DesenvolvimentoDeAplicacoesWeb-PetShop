@@ -56,10 +56,18 @@ public class ClientController {
 	}
 	
 	@RequestMapping("updateProfilePage")
-	public String updateProfilePage(HttpSession session) {
+	public String updateProfilePage(HttpSession session, Model model) {
 		if(isAdmin(session))
 			return "staff/dashboard";
+		model.addAttribute("user", (User) session.getAttribute("logged"));
 		return "client/updateProfilePage";
+	}
+	
+	@RequestMapping("updateProfile")
+	public String updateProfile(User user) {
+		DAO<User> dao = new DAO<>(User.class);
+		dao.update(user);
+		return "client/dashboard";
 	}
 	
 	@RequestMapping("scheduleServicePage")
