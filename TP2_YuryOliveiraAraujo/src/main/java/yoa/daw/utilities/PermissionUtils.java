@@ -8,6 +8,6 @@ public final class PermissionUtils {
 	}
 		
 	public static String obtainDashboard(PermissionEnum permission) {
-		return  verifyPermission(permission) ? "/staff/dashboard" : "/client/dashboard";
+		return  verifyPermission(permission) ? "/staff-dashboard" : "/client-dashboard";
 	}
 }

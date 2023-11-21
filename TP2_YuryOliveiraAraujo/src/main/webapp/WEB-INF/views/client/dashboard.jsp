@@ -10,17 +10,17 @@
 </head>
 <body>
 	<p>Petshop Cão Q-Late - Cliente</p>
-	<p><a href="registerDogPage">Cadastrar cão</a></p>
-	<p><a href="updateProfilePage">Perfil</a></p>
-	<p><a href="scheduleServicePage">Agendar serviço</a></p>
-	<p><a href="listScheduleServicesPage">Listar serviços agendados</a></p>
-	<p><a href="listPerformedServicesPage">Listar serviços executados</a></p>
+	<p><a href="<c:url value='/registerDogPage'/>">Cadastrar cão</a></p>
+    <p><a href="<c:url value='/updateProfilePage'/>">Perfil</a></p>
+    <p><a href="<c:url value='/scheduleServicePage'/>">Agendar serviço</a></p>
+    <p><a href="<c:url value='/listScheduleServicesPage'/>">Listar serviços agendados</a></p>
+    <p><a href="<c:url value='/listPerformedServicesPage'/>">Listar serviços executados</a></p>
 	
 	<a href="logout">Sair</a>	
 	
 	<h2>Meus Cães</h2>
 	<ul>
-	    <c:forEach var="dog" items="<%= new yoa.daw.dao.DogDAO().findDogsByUser((User)session.getAttribute(\"logged\")) %>">
+	    <c:forEach var="dog" items="${dogs}">
 	        <li>
 	            ${dog.name} - ${dog.breed} - ${dog.size.size}            
 	        </li>

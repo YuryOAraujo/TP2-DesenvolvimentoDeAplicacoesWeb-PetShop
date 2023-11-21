@@ -27,7 +27,7 @@ public class LoginController {
 		if(userDAO.validate(user)) {
 			user = userDAO.findByEmail(user.getEmail());
 			session.setAttribute("logged", user);
-			return PermissionUtils.obtainDashboard(user.getPermission());
+			return String.format("redirect:%s", PermissionUtils.obtainDashboard(user.getPermission()));
 		}
 		return "redirect:loginForm";
 	}

@@ -17,6 +17,13 @@ public class StaffController {
 		return !PermissionUtils.verifyPermission(user.getPermission());
 	}
 	
+	@RequestMapping("staff-dashboard")
+	public String dashboard(HttpSession session) {
+		if(isClient(session))
+			return "client/dashboard";
+		return "staff/dashboard";
+	}
+	
 	@RequestMapping("registerServicePage")
 	public String registerServicePage(HttpSession session) {
 		if(isClient(session))

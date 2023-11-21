@@ -1,6 +1,7 @@
 package yoa.daw.model;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import yoa.daw.utilities.StatusEnum;
 
 @Entity
@@ -22,11 +24,10 @@ public class Appointment {
 	private Long id;
 	
 	@Column(name = "schedule_date", nullable = false)
-	private Calendar scheduleDate;
+	private LocalDate scheduleDate;
 	
-	@ManyToOne
-	@JoinColumn(name = "service_id", nullable = false)
-	private Service service;
+	@Column(name = "services", nullable = false)
+	private String services;
 	
 	@ManyToOne
 	@JoinColumn(name = "dog_id", nullable = false)
@@ -36,30 +37,24 @@ public class Appointment {
 	private StatusEnum status;
 	
 	@Column(name = "performed_date")
-	private Calendar performedDateTime;
+	private LocalDate performedDateTime;
+	
+	@Column(name = "total")
+	private Double total; 
 
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+	
+	@Transient
+	private List<Service> serviceList;
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Calendar getScheduleDate() {
-		return scheduleDate;
-	}
-
-	public void setScheduleDate(Calendar scheduleDate) {
-		this.scheduleDate = scheduleDate;
-	}
-
-	public Service getService() {
-		return service;
-	}
-
-	public void setService(Service service) {
-		this.service = service;
 	}
 
 	public Dog getDog() {
@@ -78,11 +73,51 @@ public class Appointment {
 		this.status = status;
 	}
 
-	public Calendar getPerformedDateTime() {
+	public LocalDate getScheduleDate() {
+		return scheduleDate;
+	}
+
+	public void setScheduleDate(LocalDate scheduleDate) {
+		this.scheduleDate = scheduleDate;
+	}
+
+	public String getServices() {
+		return services;
+	}
+
+	public void setServices(String services) {
+		this.services = services;
+	}
+
+	public LocalDate getPerformedDateTime() {
 		return performedDateTime;
 	}
 
-	public void setPerformedDateTime(Calendar performedDateTime) {
+	public void setPerformedDateTime(LocalDate performedDateTime) {
 		this.performedDateTime = performedDateTime;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Service> getServiceList() {
+		return serviceList;
+	}
+
+	public void setServiceList(List<Service> serviceList) {
+		this.serviceList = serviceList;
 	}
 }
