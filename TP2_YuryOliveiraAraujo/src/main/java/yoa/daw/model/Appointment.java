@@ -37,7 +37,7 @@ public class Appointment {
 	private StatusEnum status;
 	
 	@Column(name = "performed_date")
-	private LocalDate performedDateTime;
+	private LocalDate performedDate;
 	
 	@Column(name = "total")
 	private Double total; 
@@ -48,6 +48,15 @@ public class Appointment {
 	
 	@Transient
 	private List<Service> serviceList;
+	
+	@Transient
+	private boolean cancelable;
+	
+	@Transient
+	private String formattedScheduleDate;
+	
+	@Transient
+	private String formattedPerformedDate;
 	
 	public Long getId() {
 		return id;
@@ -89,12 +98,12 @@ public class Appointment {
 		this.services = services;
 	}
 
-	public LocalDate getPerformedDateTime() {
-		return performedDateTime;
+	public LocalDate getPerformedDate() {
+		return performedDate;
 	}
 
-	public void setPerformedDateTime(LocalDate performedDateTime) {
-		this.performedDateTime = performedDateTime;
+	public void setPerformedDate(LocalDate performedDateTime) {
+		this.performedDate = performedDateTime;
 	}
 
 	public Double getTotal() {
@@ -119,5 +128,29 @@ public class Appointment {
 
 	public void setServiceList(List<Service> serviceList) {
 		this.serviceList = serviceList;
+	}
+
+	public boolean isCancelable() {
+		return cancelable;
+	}
+
+	public void setCancelable(boolean cancelable) {
+		this.cancelable = cancelable;
+	}
+
+	public String getFormattedScheduleDate() {
+		return formattedScheduleDate;
+	}
+
+	public void setFormattedScheduleDate(String formattedScheduleDate) {
+		this.formattedScheduleDate = formattedScheduleDate;
+	}
+
+	public String getFormattedPerformedDate() {
+		return formattedPerformedDate;
+	}
+
+	public void setFormattedPerformedDate(String formattedPerformedDate) {
+		this.formattedPerformedDate = formattedPerformedDate;
 	}
 }

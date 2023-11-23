@@ -31,5 +31,19 @@ public class AppointmentDAO {
 	    query.setParameter("status", status);
 	    return query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Appointment> listAppointmentsAfterDate(StatusEnum status, LocalDate startDate) {
+	    Query query = manager.createQuery("SELECT a FROM Appointment a WHERE a.status = :status AND a.scheduleDate > :startDate", Appointment.class);
+	    query.setParameter("status", status);
+	    query.setParameter("startDate", startDate);
+	    return query.getResultList();
+	}
 
+	@SuppressWarnings("unchecked")
+	public List<Appointment> listAppointmentsFromAllUsers(StatusEnum status) {
+	    Query query = manager.createQuery("SELECT a FROM Appointment a WHERE a.status = :status", Appointment.class);
+	    query.setParameter("status", status);
+	    return query.getResultList();
+	}
 }

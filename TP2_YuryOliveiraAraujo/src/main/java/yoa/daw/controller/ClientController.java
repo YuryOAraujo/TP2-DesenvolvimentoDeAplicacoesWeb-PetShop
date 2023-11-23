@@ -1,8 +1,10 @@
 package yoa.daw.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringJoiner;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
@@ -37,17 +40,30 @@ public class ClientController {
 		}
 		return joiner.toString();
 	}
+	
+	private Appointment setFormattedDates(Appointment appointment) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault());
+        if(appointment.getStatus() == StatusEnum.SCHEDULED)
+        	appointment.setFormattedScheduleDate(appointment.getScheduleDate().format(formatter));
+        
+        if(appointment.getStatus() == StatusEnum.COMPLETED)
+        	appointment.setFormattedPerformedDate(appointment.getPerformedDate().format(formatter));
+        
+        return appointment;
+	}
 
 	private List<Appointment> obtainAppointmentsByStatus(StatusEnum status, User user){
 		List<Appointment> appointments = new AppointmentDAO().listAppointments(user, status);
 
 		for(var appointment:appointments) {
 			appointment.setServiceList(new ArrayList<Service>());
+			if(status == StatusEnum.SCHEDULED)
+				appointment.setCancelable(LocalDate.now().isBefore(appointment.getScheduleDate()));
+			setFormattedDates(appointment);
 			for(var service:appointment.getServices().split(",")) {
 				appointment.getServiceList().add(new DAO<Service>(Service.class).findById(Long.parseLong(service)));
 			}
-		}
-		
+		}		
 		return appointments;
 	}
 
@@ -144,6 +160,13 @@ public class ClientController {
 		User user = (User) session.getAttribute("logged");
 		model.addAttribute("scheduleServices", obtainAppointmentsByStatus(StatusEnum.SCHEDULED, user));
 		return "client/listScheduleServicesPage";
+	}
+	
+	@ResponseBody
+	@RequestMapping("cancelAppointment")
+	public void removeAjax(Appointment appointment) {
+		DAO<Appointment> dao = new DAO<>(Appointment.class);
+		dao.remove(appointment);
 	}
 
 	@RequestMapping("listPerformedServicesPage")
