@@ -46,10 +46,10 @@ public class StaffController {
 	
 	private Double appointmentTotal(List<Service> serviceList) {
 		double total = 0;
-		for(var service:serviceList) {
-			total += service.getPrice().doubleValue();
-		}
 		
+		for(var service:serviceList)
+			total += service.getPrice().doubleValue();
+				
 		if(serviceList.size() >= 3)
 			total = total - (total / 10);
 		
@@ -153,5 +153,27 @@ public class StaffController {
 		if(isClient(session))
 			return "client/dashboard";
 		return "staff/performedServicesReportPage";
+	}
+	
+	@RequestMapping("displayReport")
+	public String displayReport(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+			Model model, HttpSession session) {
+		if(session.getAttribute("logged") != null) {
+			List<Appointment> appointments = new AppointmentDAO().listAppointmentsBetweenDates(StatusEnum.COMPLETED, startDate, endDate);
+			double total = 0;
+			parseAppointmentList(appointments);
+			
+			for(var appointment:appointments) {
+				appointment.setFormattedPerformedDate(appointment.getPerformedDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())));
+				for(var service:appointment.getServiceList())
+					total += service.getPrice().doubleValue();
+			}
+			
+			model.addAttribute("appointments", appointments);
+			model.addAttribute("total", total);
+			return "staff/scheduleAppointmentsTable";
+		}
+		return "login";
 	}
 }

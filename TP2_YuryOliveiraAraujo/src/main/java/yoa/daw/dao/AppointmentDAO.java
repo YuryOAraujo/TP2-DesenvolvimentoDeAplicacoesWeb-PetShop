@@ -46,4 +46,17 @@ public class AppointmentDAO {
 	    query.setParameter("status", status);
 	    return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Appointment> listAppointmentsBetweenDates(StatusEnum completed, LocalDate startDate, LocalDate endDate) {
+	    Query query = manager.createQuery(
+	        "SELECT a FROM Appointment a WHERE a.status = :status AND a.scheduleDate BETWEEN :startDate AND :endDate", 
+	        Appointment.class
+	    );
+	    query.setParameter("status", completed);
+	    query.setParameter("startDate", startDate);
+	    query.setParameter("endDate", endDate);
+	    return query.getResultList();
+	}
+
 }
