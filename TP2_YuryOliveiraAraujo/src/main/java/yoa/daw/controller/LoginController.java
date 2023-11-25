@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import yoa.daw.dao.DAO;
@@ -22,13 +23,14 @@ public class LoginController {
 	}
 	
 	@RequestMapping("login")
-	public String login(User user, HttpSession session) {
+	public String login(User user, HttpSession session, RedirectAttributes redirectAttributes) {
 		UserDAO userDAO = new UserDAO();
 		if(userDAO.validate(user)) {
 			user = userDAO.findByEmail(user.getEmail());
 			session.setAttribute("logged", user);
 			return String.format("redirect:%s", PermissionUtils.obtainDashboard(user.getPermission()));
 		}
+		redirectAttributes.addFlashAttribute("error", "Credenciais inválidas. Por favor, verifique seu e-mail e senha.");
 		return "redirect:loginForm";
 	}
 	
@@ -44,14 +46,15 @@ public class LoginController {
 	}
 	
 	@RequestMapping("registerForm")
-	public String register(User user) {
+	public String register(User user, RedirectAttributes redirectAttributes) {
 		user.setPermission(PermissionEnum.USER);
 		user.setConfirmed(UserConfirmedEnum.NOT_CONFIRMED);
 		user.setConfirmationToken(UUID.randomUUID().toString());
 		DAO<User> dao = new DAO<>(User.class);
 		dao.add(user);
 		EmailService.sendConfirmationEmail(user.getName(), user.getEmail(), user.getConfirmationToken());
-		return "login";
+		redirectAttributes.addFlashAttribute("success", "Usuário registrado, para entrar confirme seu email.");
+		return "redirect:loginForm";
 	}
 	
 	@RequestMapping("verifyEmail")
