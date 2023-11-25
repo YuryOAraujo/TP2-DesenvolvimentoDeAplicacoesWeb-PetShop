@@ -166,8 +166,7 @@ public class StaffController {
 			
 			for(var appointment:appointments) {
 				appointment.setFormattedPerformedDate(appointment.getPerformedDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())));
-				for(var service:appointment.getServiceList())
-					total += service.getPrice().doubleValue();
+				total += appointment.getTotal();
 			}
 			
 			model.addAttribute("appointments", appointments);

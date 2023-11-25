@@ -114,7 +114,7 @@ public class ClientController {
 	public String updateProfile(User user) {
 		DAO<User> dao = new DAO<>(User.class);
 		dao.update(user);
-		return "client/dashboard";
+		return "redirect:client-dashboard";
 	}
 
 	@RequestMapping("scheduleServicePage")

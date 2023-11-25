@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+*{
+	padding: 0;
+	margin: 0;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    width: 75%;
+    height: 90vh;
+    background-color: #fff;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #17a2b8;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.table-container {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #17a2b8;
+    color: #ffffff;
+}
+
+.form-group{
+	width: 50%;
+	margin: auto;
+}
+
+.empty-list {
+    text-align: center;
+    margin-top: 20px;
+    color: #6c757d; /* Bootstrap text-muted color */
+}
+
+.empty-list i {
+    font-size: 10em; /* Adjust the size as needed */
+}

@@ -1,30 +1,45 @@
-<%@page import="yoa.daw.model.User"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Petshop Cão Q-Late - Cliente</title>
+    <meta charset="UTF-8">
+    <title>Petshop CÃ£o Q-Late - Cliente</title>
+    <jsp:include page="navbar.jsp"/>
 </head>
 <body>
-	<p>Petshop Cão Q-Late - Cliente</p>
-	<p><a href="<c:url value='/registerDogPage'/>">Cadastrar cão</a></p>
-    <p><a href="<c:url value='/updateProfilePage'/>">Perfil</a></p>
-    <p><a href="<c:url value='/scheduleServicePage'/>">Agendar serviço</a></p>
-    <p><a href="<c:url value='/listScheduleServicesPage'/>">Listar serviços agendados</a></p>
-    <p><a href="<c:url value='/listPerformedServicesPage'/>">Listar serviços executados</a></p>
-	
-	<a href="logout">Sair</a>	
-	
-	<h2>Meus Cães</h2>
-	<ul>
-	    <c:forEach var="dog" items="${dogs}">
-	        <li>
-	            ${dog.name} - ${dog.breed} - ${dog.size.size}            
-	        </li>
-	    </c:forEach>
-	</ul>
+    <div class="container table-container">
+        <h2 class="py-3">Meus CÃ£es</h2>
+
+        <c:choose>
+            <c:when test="${empty dogs}">
+                <div class="empty-list">
+                    <i class="bi bi-exclamation-triangle-fill text-muted"></i>
+                    <p class="text-muted">Oops! Parece que ainda nÃ£o temos informaÃ§Ãµes sobre os seus cÃ£ezinhos. <a href="<c:url value='/registerDogPage'/>">Que tal adicionar um agora?</a></p>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>RaÃ§a</th>
+                            <th>Tamanho</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="dog" items="${dogs}">
+                            <tr>
+                                <td>${dog.name}</td>
+                                <td>${dog.breed}</td>
+                                <td>${dog.size.size}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </body>
 </html>

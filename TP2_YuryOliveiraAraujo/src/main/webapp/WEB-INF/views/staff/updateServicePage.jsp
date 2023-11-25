@@ -6,17 +6,42 @@
 <head>
 <meta charset="UTF-8">
 <title>Atualizar serviços</title>
+<jsp:include page="navbar.jsp"/>
 </head>
 <body>
-	<p>Atualizar serviços</p>
-	
-	<h2>Serviços</h2>
-	<ul>
-	    <c:forEach var="service" items="${services}">
-	        <li>
-	            ${service.name} - ${service.price} - <a href="displayService?id=${service.id}">Atualizar</a>
-	        </li>
-	    </c:forEach>
-	</ul>
+	<div class="container mt-4">
+        <h2 class="my-3">Atualizar serviços</h2>
+        
+        <c:choose>
+            <c:when test="${empty services}">
+                <div class="empty-list">
+                    <i class="bi bi-exclamation-triangle-fill text-muted"></i>
+                    <p class="text-muted">Oops! Parece que nenhum serviço foi encontrado. <a href="<c:url value='/scheduleServicePage'/>">Que tal cadastrar um agora?</a> </p>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Preço</th>
+                            <th>Atualizar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="service" items="${services}">
+                            <tr>
+                                <td>${service.name}</td>
+                                <td>${service.price}</td>
+                                <td>
+                                    <a href="displayService?id=${service.id}" class="btn btn-info">Atualizar</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </body>
 </html>
