@@ -11,6 +11,13 @@
 <body>
     <div class="container mt-4">
         <h2>Executar serviços</h2>
+        
+        <div id="success-message" class="mt-2">
+            <c:if test="${not empty success}">
+                <div class="alert alert-success" role="alert">${success}</div>
+            </c:if>
+        </div>
+        
         <c:choose>
             <c:when test="${empty appointments}">
                 <div class="empty-list">

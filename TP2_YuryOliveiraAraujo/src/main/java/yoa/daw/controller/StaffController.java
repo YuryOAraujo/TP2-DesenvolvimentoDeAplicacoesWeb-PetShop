@@ -142,13 +142,14 @@ public class StaffController {
 	}
 
 	@RequestMapping("performService")
-	public String performService(Appointment performed) {
+	public String performService(Appointment performed, RedirectAttributes redirectAttributes) {
 		DAO<Appointment> appointmentDAO = new DAO<>(Appointment.class);
 		Appointment appointment = appointmentDAO.findById(performed.getId());
 		appointment.setTotal(performed.getTotal());
 		appointment.setPerformedDate(performed.getPerformedDate());	    
 		appointment.setStatus(StatusEnum.COMPLETED);
 		appointmentDAO.update(appointment);
+		redirectAttributes.addFlashAttribute("success", "Serviço realizado com sucesso.");
 	    return "redirect:performServicesPage";
 	}
 

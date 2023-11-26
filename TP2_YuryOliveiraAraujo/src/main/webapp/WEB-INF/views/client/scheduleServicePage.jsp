@@ -13,6 +13,12 @@
     <div class="container">
         <h2 class="py-3">Agendar serviço</h2>
 
+		<div id="success-message" class="mt-2">
+            <c:if test="${not empty success}">
+                <div class="alert alert-success" role="alert">${success}</div>
+            </c:if>
+        </div>
+        
         <c:if test="${not empty message}">
             <div class="alert alert-danger">
                 ${message}

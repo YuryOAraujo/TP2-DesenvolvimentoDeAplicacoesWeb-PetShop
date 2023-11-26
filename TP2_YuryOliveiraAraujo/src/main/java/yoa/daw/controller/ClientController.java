@@ -126,7 +126,6 @@ public class ClientController {
 		User user = (User) session.getAttribute("logged");
 		model.addAttribute("dogs", new DogDAO().findDogsByUser(user));
 		model.addAttribute("services", new DAO<Service>(Service.class).list());
-		redirectAttributes.addFlashAttribute("success", "Serviço agendado com sucesso.");
 		return "client/scheduleServicePage";
 	}
 
@@ -152,7 +151,7 @@ public class ClientController {
 		appointment.setUser((User) session.getAttribute("logged"));
 
 		new DAO<Appointment>(Appointment.class).add(appointment);
-
+		redirectAttributes.addFlashAttribute("success", "Serviço agendado com sucesso.");
 		return "redirect:/client-dashboard";
 	}
 

@@ -7,6 +7,11 @@
     <title>Petshop Cão Q-Late - Realizar serviço</title>
     <jsp:include page="navbar.jsp"/>
     <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
+    <script>
+        $(document).ready(function () {
+            $(".price-mask").mask("R$00.00", { reverse: true });
+        });
+    </script>
 </head>
 <body>
     <div class="container mt-4">
@@ -36,7 +41,7 @@
                         <c:forEach var="service" items="${appointment.serviceList}">
                             <tr>
                                 <td>${service.name}</td>
-                                <td>${service.price}</td>
+                                <td class="price-mask">R$ ${service.price}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
