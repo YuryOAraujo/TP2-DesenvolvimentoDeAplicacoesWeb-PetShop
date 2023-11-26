@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.lang.String" %>
 
 <c:choose>
     <c:when test="${empty appointments}">
@@ -14,7 +15,9 @@
                 <th>Data</th>
                 <th>Cão</th>
                 <th>Serviços</th>
-                <th>Valor</th>
+                <c:if test="${not empty total}">
+                	<th>Valor</th>
+                </c:if>
             </tr>
 
             <c:forEach var="appointment" items="${appointments}">
@@ -24,11 +27,13 @@
                     <td>
                         <select>
                             <c:forEach var="service" items="${appointment.serviceList}">
-                                <option>${service.name} - ${service.price}</option>
+                                <option>${service.name} - R$ ${service.price}</option>
                             </c:forEach>
                         </select>
                     </td>
-                    <td>${appointment.total}</td>
+                    <c:if test="${not empty total}">
+                    	<td class="price-mask">R$ ${String.format("%.2f", appointment.total)}</td>
+                    </c:if>
                 </tr>
             </c:forEach>
         </table>
@@ -37,7 +42,9 @@
         	<c:if test="${not empty total}">
                 <tr>
                     <td colspan="3" class="bg-info text-white font-weight-bold">Total:</td>
-                    <td class="bg-info text-white font-weight-bold"> ${total}</td>
+                     <td class="bg-info text-white font-weight-bold price-mask">
+			            R$ ${String.format("%.2f", total)}
+			        </td>
                 </tr>
             </c:if>
         </div>

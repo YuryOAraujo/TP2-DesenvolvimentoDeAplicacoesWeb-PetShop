@@ -5,12 +5,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import yoa.daw.dao.AppointmentDAO;
@@ -57,9 +57,12 @@ public class StaffController {
 	}
 	
 	@RequestMapping("staff-dashboard")
-	public String dashboard(HttpSession session) {
+	public String dashboard(Model model, HttpSession session) {
 		if(isClient(session))
 			return "client/dashboard";
+		
+		model.addAttribute("services", new DAO<Service>(Service.class).list());
+		
 		return "staff/dashboard";
 	}
 	
@@ -71,9 +74,10 @@ public class StaffController {
 	}
 	
 	@RequestMapping("registerService")
-	public String registerService(Service service) {
+	public String registerService(Service service, RedirectAttributes redirectAttributes) {
 		new DAO<Service>(Service.class).add(service);
-		return "staff/dashboard";
+		redirectAttributes.addFlashAttribute("success", "Serviço cadastrado com sucesso.");
+		return "redirect:staff-dashboard";
 	}
 	
 	@RequestMapping("updateServicePage")
@@ -91,8 +95,9 @@ public class StaffController {
 	}
 	
 	@RequestMapping("updateService")
-	public String updateService(Service service) {
+	public String updateService(Service service, RedirectAttributes redirectAttributes) {
 		new DAO<Service>(Service.class).update(service);
+		redirectAttributes.addFlashAttribute("success", "Serviço atualizado com sucesso.");
 		return "redirect:updateServicePage";
 	}
 	

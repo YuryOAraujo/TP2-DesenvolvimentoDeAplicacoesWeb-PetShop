@@ -8,12 +8,57 @@
     <title>Atualizar perfil</title>
     <jsp:include page="navbar.jsp"/>
     <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#phone").mask("(00) 00000-0000");
+
+            function validateForm() {
+                var phone = $("#phone").val();
+                var password = $("#password").val();
+                var confirmPassword = $("#confirmPassword").val();
+                var errorElement = $("#error-message");
+
+                if (phone === "") {
+                    errorElement.html('<div class="alert alert-danger" role="alert">Por favor, insira o telefone.</div>');
+                    return false;
+                }
+
+                if (password === "") {
+                    errorElement.html('<div class="alert alert-danger" role="alert">Por favor, insira a senha.</div>');
+                    return false;
+                }
+
+                if (confirmPassword === "") {
+                    errorElement.html('<div class="alert alert-danger" role="alert">Por favor, confirme a senha.</div>');
+                    return false;
+                }
+
+                if (password !== confirmPassword) {
+                    errorElement.html('<div class="alert alert-danger" role="alert">As senhas não coincidem.</div>');
+                    return false;
+                }
+
+                errorElement.text("");
+                return true;
+            }
+
+            $("form").submit(function () {
+                return validateForm();
+            });
+        });
+    </script>
 </head>
 <body>
 
     <div class="container">
         <h2 class="py-3">Atualizar perfil</h2>
         <form action="updateProfile">
+        	 <div id="error-message" class="text-danger my-2"></div>
+        
             <input type="hidden" name="id" value="${user.id}">
             <input type="hidden" name="permission" value="${user.permission}">
             <input type="hidden" name="confirmed" value="${user.confirmed}">
@@ -49,6 +94,11 @@
                 <input type="password" id="password" name="password" value="${user.password}" class="form-control">
             </div>
 
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar Senha:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
+            </div>
+          
             <div class="text-center my-3">
                 <input type="submit" value="Atualizar" class="btn btn-info">
             </div>

@@ -20,6 +20,7 @@
                 })
             }
         });
+       
     </script>
 </head>
 <body class="bg-light">

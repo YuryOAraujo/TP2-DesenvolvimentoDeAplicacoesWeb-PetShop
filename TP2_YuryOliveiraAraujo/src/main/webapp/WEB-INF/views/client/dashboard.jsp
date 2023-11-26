@@ -11,6 +11,12 @@
 <body>
     <div class="container table-container">
         <h2 class="py-3">Meus Cães</h2>
+        
+        <div id="success-message" class="mt-2">
+            <c:if test="${not empty success}">
+                <div class="alert alert-success" role="alert">${success}</div>
+            </c:if>
+        </div>
 
         <c:choose>
             <c:when test="${empty dogs}">

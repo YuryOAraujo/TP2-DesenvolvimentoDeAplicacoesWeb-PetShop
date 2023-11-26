@@ -12,7 +12,7 @@
 <body>
 
 <div class="container mt-4">
-    <h3 class="text-info text-center">Atualizar serviço - ${service.id}</h3>
+    <h3 class="text-info text-center">Atualizar serviço</h3>
     
     <form action="updateService" method="post">
         <input type="hidden" name="id" value="${service.id}">

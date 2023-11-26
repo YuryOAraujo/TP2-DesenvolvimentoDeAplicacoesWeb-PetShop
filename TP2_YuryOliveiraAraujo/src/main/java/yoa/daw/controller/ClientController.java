@@ -75,13 +75,14 @@ public class ClientController {
 	}
 
 	@RequestMapping("registerDog")
-	public String registerDog(Dog dog, HttpSession session) {
+	public String registerDog(Dog dog, HttpSession session, RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("logged");
 		if(user != null) {
 			dog.setUser(user);
 			DAO<Dog> dao = new DAO<>(Dog.class);
 			dao.add(dog);			
 		}
+		redirectAttributes.addFlashAttribute("success", "Cão cadastrado com sucesso.");
 		return "redirect:/client-dashboard";
 	}
 
@@ -111,19 +112,21 @@ public class ClientController {
 	}
 
 	@RequestMapping("updateProfile")
-	public String updateProfile(User user) {
+	public String updateProfile(User user, RedirectAttributes redirectAttributes) {
 		DAO<User> dao = new DAO<>(User.class);
 		dao.update(user);
+		redirectAttributes.addFlashAttribute("success", "Dados do usuário atualizados com sucesso.");
 		return "redirect:client-dashboard";
 	}
 
 	@RequestMapping("scheduleServicePage")
-	public String scheduleServicePage(HttpSession session, Model model) {
+	public String scheduleServicePage(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
 		if(isAdmin(session))
 			return "staff/dashboard";
 		User user = (User) session.getAttribute("logged");
 		model.addAttribute("dogs", new DogDAO().findDogsByUser(user));
 		model.addAttribute("services", new DAO<Service>(Service.class).list());
+		redirectAttributes.addFlashAttribute("success", "Serviço agendado com sucesso.");
 		return "client/scheduleServicePage";
 	}
 

@@ -18,8 +18,13 @@
             function fetchAppointments(startDate, endDate) {
                 $.post("displayReport", {"startDate": startDate, "endDate": endDate}, function(response) {
                     $("#appointmentTable").html(response);
+                    applyPriceMask();
                 });
             }
+            
+            function applyPriceMask() {
+                $(".price-mask").mask("R$00.00", { reverse: true });
+            };
         });
     </script>
 </head>

@@ -12,6 +12,12 @@
 	<div class="container mt-4">
         <h2 class="my-3">Atualizar serviços</h2>
         
+        <div id="success-message" class="mt-2">
+            <c:if test="${not empty success}">
+                <div class="alert alert-success" role="alert">${success}</div>
+            </c:if>
+        </div>
+        
         <c:choose>
             <c:when test="${empty services}">
                 <div class="empty-list">
@@ -32,7 +38,7 @@
                         <c:forEach var="service" items="${services}">
                             <tr>
                                 <td>${service.name}</td>
-                                <td>${service.price}</td>
+                                <td class="price-mask">R$ ${service.price}</td>
                                 <td>
                                     <a href="displayService?id=${service.id}" class="btn btn-info">Atualizar</a>
                                 </td>
