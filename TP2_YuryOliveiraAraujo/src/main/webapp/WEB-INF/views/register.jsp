@@ -19,7 +19,7 @@
             function validateForm() {
                 var cpf = $("#cpf").val();
                 var name = $("#name").val();
-                var birthDate = $("#birthDate").val();
+                var birthDate = new Date($("#birthDate").val());
                 var email = $("#email").val();
                 var password = $("#password").val();
                 var confirmPassword = $("#confirmPassword").val();
@@ -27,44 +27,50 @@
                 var errorElement = $("#error-message");
 
                 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                var today = new Date();
 
                 if (cpf === "") {
-                    errorElement.html('<div class="alert alert-danger" role="alert">Por favor, insira o CPF.</div>');
+                    showError("Por favor, insira o CPF.");
                     return false;
                 }
 
                 if (name === "") {
-                    errorElement.html('<div class="alert alert-danger" role="alert">Por favor, insira o nome.</div>');
+                    showError("Por favor, insira o nome.");
                     return false;
                 }
 
-                if (birthDate === "") {
-                    errorElement.html('<div class="alert alert-danger" role="alert">Por favor, insira a data de nascimento.</div>');
+                if (birthDate === "Invalid Date" || birthDate >= today) {
+                    showError("Por favor, insira uma data de nascimento válida e anterior à data atual.");
                     return false;
                 }
 
                 if (email === "" || !emailRegex.test(email)) {
-                    errorElement.html('<div class="alert alert-danger" role="alert">Por favor, insira um endereço de e-mail válido.</div>');
+                    showError("Por favor, insira um endereço de e-mail válido.");
                     return false;
                 }
 
                 if (password === "") {
-                    errorElement.html('<div class="alert alert-danger" role="alert">Por favor, insira a senha.</div>');
+                    showError("Por favor, insira a senha.");
+                    return false;
+                }
+
+                if (confirmPassword !== password) {
+                    showError("As senhas não coincidem. Por favor, verifique suas senhas.");
                     return false;
                 }
 
                 if (phone === "") {
-                    errorElement.html('<div class="alert alert-danger" role="alert">Por favor, insira o telefone.</div>');
-                    return false;
-                }
-                
-                if(password !== confirmPassword){
-                	errorElement.html('<div class="alert alert-danger" role="alert">Por favor, verifique suas senhas.</div>');
+                    showError("Por favor, insira o telefone.");
                     return false;
                 }
 
                 errorElement.text("");
                 return true;
+            }
+
+            function showError(message) {
+                var errorElement = $("#error-message");
+                errorElement.html('<div class="alert alert-danger" role="alert">' + message + '</div>');
             }
 
             $("#registerForm").submit(function () {

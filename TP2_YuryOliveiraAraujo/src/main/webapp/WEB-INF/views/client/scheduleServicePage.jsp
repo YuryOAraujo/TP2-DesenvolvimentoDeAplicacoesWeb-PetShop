@@ -7,6 +7,21 @@
     <title>Agendar serviço</title>
     <jsp:include page="navbar.jsp"/>
     <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
+     <script>
+        function validateForm() {
+            var scheduleDate = new Date(document.getElementById("scheduleDate").value);
+            var today = new Date();
+            
+            scheduleDate.setDate(scheduleDate.getDate() + 1);
+            
+            if (scheduleDate < today) {
+            	 $("#error-message").html('<div class="alert alert-danger" role="alert">Por favor, selecione uma data de agendamento futura.</div>');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 <body>
 
@@ -19,13 +34,15 @@
             </c:if>
         </div>
         
+        <div id="error-message"></div>
+        
         <c:if test="${not empty message}">
             <div class="alert alert-danger">
                 ${message}
             </div>
         </c:if>
 
-        <form action="scheduleService" method="post">
+        <form action="scheduleService" method="post" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="dog">Selecione o cão:</label>
                 <select id="dog" name="dogId" class="form-control" required>
@@ -47,7 +64,7 @@
 
             <div class="form-group">
                 <label for="scheduleDate">Data de agendamento:</label>
-                <input type="text" id="scheduleDate" name="scheduleDate" placeholder="dd/MM/yyyy" class="form-control" required>
+                <input type="date" id="scheduleDate" name="scheduleDate" placeholder="dd/MM/yyyy" class="form-control" required>
             </div>
 	
 			<div class="text-center">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.lang.String" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,11 +41,11 @@
 		                        <td>
 		                            <select class="form-control">
 		                                <c:forEach var="service" items="${appointment.serviceList}">
-		                                    <option>${service.name} - ${service.price }</option>
+		                                    <option>${service.name} - R$ ${service.price }</option>
 		                                </c:forEach>
 		                            </select>
 		                        </td>
-		                        <td>${appointment.total}</td>
+		                        <td>${String.format("R$ %.2f", appointment.total)}</td>
 		                    </tr>
 		                </c:forEach>
 		            </tbody>
@@ -52,6 +53,5 @@
 	        </c:otherwise>
         </c:choose>
     </div>
-
 </body>
 </html>
