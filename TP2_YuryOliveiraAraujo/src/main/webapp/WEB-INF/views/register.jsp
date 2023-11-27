@@ -25,7 +25,7 @@
                 var confirmPassword = $("#confirmPassword").val();
                 var phone = $("#phone").val();
                 var errorElement = $("#error-message");
-
+                
                 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 var today = new Date();
 
@@ -40,7 +40,7 @@
                 }
 
                 if (birthDate === "Invalid Date" || birthDate >= today) {
-                    showError("Por favor, insira uma data de nascimento válida e anterior à data atual.");
+                    showError("Por favor, insira uma data de nascimento válida.");
                     return false;
                 }
 
